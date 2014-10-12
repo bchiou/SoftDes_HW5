@@ -2,7 +2,7 @@
 """
 Created on Sun Oct 12 15:42:40 2014
 
-@author: elena
+@author: elena & BRANDON CHIOUUUUUUUU
 """
 
 import pygame, math, os, sys
