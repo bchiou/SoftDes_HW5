@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Oct 12 19:49:18 2014
-
-<<<<<<< HEAD
 @author: Elena Shaw & Brandon Chiou
-=======
-@author: elena
->>>>>>> 2cc4d98250a1008906beadd0fd3cb3733a6d6f59
 """
 
 import pygame, sys, random
@@ -37,6 +32,7 @@ class MainFrame:
                     pygame.quit()                    
                     sys.exit()
 
+x
 class Vines:
     """creates vine maze"""
     def __init__(self):
@@ -49,13 +45,17 @@ class Vines:
         for i in range(6):
             MainWindow.screen.blit(vine,(i*16+50,100))
     
+class char(object):
+    def __init__(self, jcolor = "red", jsize = "small"):
+        self.color = jcolor
+        self.size = jsize
+    
+    def __str__(self):
+        return "Jack is now" + self.color + "and" + self.size
 
-#class Vines:
-#    """creates vine maze"""
-def createvines():
-    vine = pygame.image.load('vine.jpg').convert()    
-    for i in range(6):
-        MainWindow.screen.blit(vine,(i*16+50,100))
+    def move(self, xnew, ynew):
+        self.x = xnew
+        self.y = ynew
 
 
 if __name__ == "__main__":
@@ -70,7 +70,9 @@ if __name__ == "__main__":
     MainWindow.MainLoop()
     pygame.display.update()
 
-
+    jack = char(x = 0, y = 0)
+    jack.move(5,10)
+    print self.x
 
 
 
