@@ -2,7 +2,11 @@
 """
 Created on Sun Oct 12 19:49:18 2014
 
+<<<<<<< HEAD
 @author: Elena Shaw & Brandon Chiou
+=======
+@author: elena
+>>>>>>> 2cc4d98250a1008906beadd0fd3cb3733a6d6f59
 """
 
 import pygame, sys, random
@@ -46,10 +50,12 @@ class Vines:
             MainWindow.screen.blit(vine,(i*16+50,100))
     
 
-#class Update:
-#    MainWindow.screen.blit(MainWindow.background,(0,0)) 
-#    pygame.display.flip()
-
+#class Vines:
+#    """creates vine maze"""
+def createvines():
+    vine = pygame.image.load('vine.jpg').convert()    
+    for i in range(6):
+        MainWindow.screen.blit(vine,(i*16+50,100))
 
 
 if __name__ == "__main__":
@@ -64,7 +70,6 @@ if __name__ == "__main__":
     MainWindow.MainLoop()
     pygame.display.update()
 
-    
 
 
 
