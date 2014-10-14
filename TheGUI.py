@@ -8,6 +8,8 @@ Created on Sun Oct 12 19:49:18 2014
 import pygame, sys
 from pygame.locals import *
 Clock = pygame.time.Clock()
+vine = pygame.image.load('vine.jpg')
+#screen = pygame.display.set_mode((560,560))
 
 class MainFrame:
     """Initializes and creates game"""
@@ -17,17 +19,22 @@ class MainFrame:
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
 
-    def MainLoop(self):      
+    def MainLoop(self):        
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.quit()                    
                     sys.exit()
 
-            
-if __name__ == "__main__":
-    MainWindow = MainFrame(560, 560)
-    MainWindow.MainLoop()
 
+
+while True:
+    MainWindow = MainFrame(560, 560)    
+    MainWindow.screen.blit(vine,(100,100))
+    pygame.display.flip() 
+    MainWindow.MainLoop()
+  
+    
 
 pygame.display.update()
 Clock.tick(60)
