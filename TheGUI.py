@@ -33,7 +33,6 @@ class MainFrame:
                     pygame.quit()                    
                     sys.exit()
 
-
 class Vines:
     """creates vine maze"""
     def __init__(self):
@@ -73,14 +72,12 @@ class Vines:
         for i in range(6):
             MainWindow.screen.blit(vine,(i*16+50,100))
     
-class char(object):
-    def __init__(self, jcolor = "red", jsize = "small"):
+class char(pygame.sprite.Sprite):
+    def __init__(self, jcolor = "red", x, y):
+        pygame.sprite.Sprite. 
         self.color = jcolor
         self.size = jsize
-    
-    def __str__(self):
-        return "Jack is now" + self.color + "and" + self.size
-
+        
     def move(self, xnew, ynew):
         self.x = xnew
         self.y = ynew
