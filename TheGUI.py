@@ -79,13 +79,6 @@ class Vines:
                     MainWindow.screen.blit(vine, (i*2,j*2))
         return V
 
-class char:
-    """ Encodes the state of the snake in the game """
-    def __init__(self):
-        self.state = 'idle'
-        self.x = 200
-        self.y = 200
-
 class CharControl(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -111,14 +104,18 @@ class CharControl(pygame.sprite.Sprite):
     def handle_key_event(self, event):
         if event == pygame.K_LEFT:
             print 'LEFT!'
-            new_x = Jack.x - 5
+            for 
+            new_x = self.x - 5
             print new_x
             MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
         if event == pygame.K_RIGHT:
             print 'right!'
-            new_y = char.draw.x + 5
+            new_y = self.y + 5
             print self.new.x
             MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
+#        if event == pygame.K_UP:
+#        
+#        if event == pygame.K_DOWN:
 
 if __name__ == "__main__":
     Clock.tick(60)    
