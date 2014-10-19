@@ -101,22 +101,37 @@ class char:
         MainWindow.screen.blit(self.jackpic, (self.x, self.y))
         
 
-class PyGameKeyController:
-    def __init__(self,model):
-        self.model = model
-    
-    def handle_key_event(self,event):
-        if event == pygame.K_LEFT:
-            print 'LEFT!'
-            new_x = Jack.x - 5
-            print new_x
-            MainWindow.screen.blit(char.draw.jackpic,(new_x, Jack.y))
-        if event == pygame.K_RIGHT:
-            print 'right!'
-            self.new.x = char.draw.x + 5
-            print self.new.x
-            MainWindow.screen.blit(jack,(new_x, Jack.y))
+#class PyGameKeyController:
+#    def __init__(self,model):
+#        self.model = model
+#    
+#    def handle_key_event(self,event):
+#        if event == pygame.K_LEFT:
+#            print 'LEFT!'
+#            new_x = Jack.x - 5
+#            print new_x
+#            MainWindow.screen.blit(char.draw.jackpic,(new_x, Jack.y))
+#        if event == pygame.K_RIGHT:
+#            print 'right!'
+#            self.new.x = char.draw.x + 5
+#            print self.new.x
+#            MainWindow.screen.blit(jack,(new_x, Jack.y))
 
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos, collisions):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('snake.png')
+        self.image.set_colorkey(self.image.get_at((0,0)))
+        self.rect = self.image.get_rect()
+        self.x = pos[0]; self.y = pos[1]
+        self.collisions = collisions
+        self.type = 'player'
+        self.facing = 'up'
+        self.speed = 5
+        self.lives = 3
+        self.invincible = False
+        self.dead = False
+        self.paused = False
 
 
 if __name__ == "__main__":
@@ -124,7 +139,7 @@ if __name__ == "__main__":
     MainWindow = MainFrame() 
     Jack = char()
     controller = PyGameKeyController(Jack)
-   
+    
     MainWindow.background.fill(color)
 #    maze = Vines()
 
