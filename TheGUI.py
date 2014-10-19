@@ -4,6 +4,7 @@ Created on Sun Oct 12 19:49:18 2014
 @author: Elena Shaw & Brandon Chiou
 """
 
+import numpy
 import pygame, sys, random
 from pygame.locals import *
 Clock = pygame.time.Clock()
@@ -77,37 +78,23 @@ class Vines:
                     V.append((i*2,j*2))
                     MainWindow.screen.blit(vine, (i*2,j*2))
         return V
-    
-#class burn:
-#    def burn(self, speed):
-#        
 
 class char:
-    """ Encodes the state of the paddle in the game """
+    """ Encodes the state of the snake in the game """
     def __init__(self):
         self.state = 'idle'
         self.x = 200
         self.y = 200
-   
-    def draw(self,screen):
-        self.jackpic = pygame.image.load('snake.png').convert()        
-#        self.color = jcolor
-        self.size = 1
 
-        MainWindow.screen.blit(self.jackpic, (self.x, self.y))
-        
-
-#class PyGameKeyController:
-#    def __init__(self,model):
-#        self.model = model
-
-class Jack(pygame.sprite.Sprite):
-    def __init__(self, pos, collisions):
+class CharControl(pygame.sprite.Sprite):
+    def __init__(self, model):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('snake.png')
         self.image.set_colorkey(self.image.get_at((0,0)))
+        self.model = model
         self.rect = self.image.get_rect()
-        self.x = pos[0]; self.y = pos[1]
+        self.x = height
+        self.y = width
         self.collisions = collisions
         self.type = 'player'
         self.facing = 'up'
@@ -116,6 +103,11 @@ class Jack(pygame.sprite.Sprite):
         self.invincible = False
         self.dead = False
         self.paused = False
+        
+    def draw(self,screen):
+        self.jackpic = pygame.image.load('snake.png').convert()
+        self.size = 1
+        MainWindow.screen.blit(self.jackpic, (self.x, self.y))
     
     def handle_key_event(self, event):
         if event == pygame.K_LEFT:
@@ -129,21 +121,19 @@ class Jack(pygame.sprite.Sprite):
             print self.new.x
             MainWindow.screen.blit(jack,(new_x, Jack.y))
 
-
 if __name__ == "__main__":
     Clock.tick(60)    
     MainWindow = MainFrame() 
     Jack = char()
-    controller = PyGameKeyController(Jack)
+    controller = CharControl(Jack)
     
     MainWindow.background.fill(color)
 #    maze = Vines()
-
-
-    
 #    maze.maze(.75, .20)
     MainWindow.screen.blit(MainWindow.background,(0,0))
     Jack.draw(MainWindow)
+#    maze.update()
+#    maze.draw(MainWindow)
 
 
     while True:
@@ -153,8 +143,7 @@ if __name__ == "__main__":
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 controller.handle_key_event(event.key)
-#        maze.update()
-#        maze.draw(MainWindow)
+
         pygame.display.flip() 
         pygame.display.update()
 #        Clock.sleep(.001) 
