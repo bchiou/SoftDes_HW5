@@ -24,10 +24,6 @@ class MainFrame:
         background = pygame.Surface(self.screen.get_size())
         self.background = background.convert()
 
-        
-
-
-
 class Vines:
     """creates vine maze"""
     def __init__(self):
@@ -104,20 +100,8 @@ class char:
 #class PyGameKeyController:
 #    def __init__(self,model):
 #        self.model = model
-#    
-#    def handle_key_event(self,event):
-#        if event == pygame.K_LEFT:
-#            print 'LEFT!'
-#            new_x = Jack.x - 5
-#            print new_x
-#            MainWindow.screen.blit(char.draw.jackpic,(new_x, Jack.y))
-#        if event == pygame.K_RIGHT:
-#            print 'right!'
-#            self.new.x = char.draw.x + 5
-#            print self.new.x
-#            MainWindow.screen.blit(jack,(new_x, Jack.y))
 
-class Player(pygame.sprite.Sprite):
+class Jack(pygame.sprite.Sprite):
     def __init__(self, pos, collisions):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('snake.png')
@@ -132,6 +116,18 @@ class Player(pygame.sprite.Sprite):
         self.invincible = False
         self.dead = False
         self.paused = False
+    
+    def handle_key_event(self, event):
+        if event == pygame.K_LEFT:
+            print 'LEFT!'
+            new_x = Jack.x - 5
+            print new_x
+            MainWindow.screen.blit(char.draw.jackpic,(new_x, Jack.y))
+        if event == pygame.K_RIGHT:
+            print 'right!'
+            self.new.x = char.draw.x + 5
+            print self.new.x
+            MainWindow.screen.blit(jack,(new_x, Jack.y))
 
 
 if __name__ == "__main__":
