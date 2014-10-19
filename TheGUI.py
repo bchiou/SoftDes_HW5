@@ -87,15 +87,14 @@ class char:
         self.y = 200
 
 class CharControl(pygame.sprite.Sprite):
-    def __init__(self, model):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('snake.png')
         self.image.set_colorkey(self.image.get_at((0,0)))
-        self.model = model
+#        self.model = model
         self.rect = self.image.get_rect()
         self.x = height
         self.y = width
-        self.collisions = collisions
         self.type = 'player'
         self.facing = 'up'
         self.speed = 5
@@ -114,24 +113,25 @@ class CharControl(pygame.sprite.Sprite):
             print 'LEFT!'
             new_x = Jack.x - 5
             print new_x
-            MainWindow.screen.blit(char.draw.jackpic,(new_x, Jack.y))
+            MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
         if event == pygame.K_RIGHT:
             print 'right!'
-            self.new.x = char.draw.x + 5
+            new_y = char.draw.x + 5
             print self.new.x
-            MainWindow.screen.blit(jack,(new_x, Jack.y))
+            MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
 
 if __name__ == "__main__":
     Clock.tick(60)    
     MainWindow = MainFrame() 
-    Jack = char()
-    controller = CharControl(Jack)
+#    Jack = char()
+    controller = CharControl()
+    controller.draw(MainWindow)
     
     MainWindow.background.fill(color)
 #    maze = Vines()
 #    maze.maze(.75, .20)
     MainWindow.screen.blit(MainWindow.background,(0,0))
-    Jack.draw(MainWindow)
+
 #    maze.update()
 #    maze.draw(MainWindow)
 
