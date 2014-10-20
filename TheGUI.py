@@ -104,10 +104,12 @@ class CharControl(pygame.sprite.Sprite):
     def handle_key_event(self, event):
         if event == pygame.K_LEFT:
             print 'LEFT!'
-            for 
-            new_x = self.x - 5
-            print new_x
-            MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
+            if self.x in range (0, height):
+                new_x = self.x - 5 #something WRONG here
+                print new_x
+                MainWindow.screen.blit(self.jackpic,(new_x, Jack.y))
+            else:
+                #doNOTHING
         if event == pygame.K_RIGHT:
             print 'right!'
             new_y = self.y + 5
@@ -154,7 +156,3 @@ if __name__ == "__main__":
 #    jack = char(x = 0, y = 0)
 #    jack.move(5,10)
 #    print char.move.x
-
-
-
-
