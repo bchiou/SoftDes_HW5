@@ -47,16 +47,17 @@ class Model:
 class Controller:
     def __init__(self, model):
         self.model = model    
-    def handle_key_event(self, event):
+    def handle_key_event(self, event):        
         if event.type == KEYUP:
             if event.key == pygame.K_UP:
-                self.model.jack.y -= 10
+                if (self.model.jack.y > 0): self.model.jack.y -= 10
             if event.key == pygame.K_DOWN:
-                self.model.jack.y += 10
+                if (self.model.jack.y < height - 10): self.model.jack.y += 10
             if event.key == pygame.K_LEFT:
-                self.model.jack.x -= 10
+                if (self.model.jack.x > 0): self.model.jack.x -= 10
             if event.key == pygame.K_RIGHT:
-                self.model.jack.x += 10
+                if (self.model.jack.x < width - 10): self.model.jack.x += 10
+            
 #####################################################################
 class Jack:
     def __init__(self):
