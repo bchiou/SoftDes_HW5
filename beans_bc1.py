@@ -29,14 +29,18 @@ class View:
     def viewprint(self):
         #print self.model.vines.text
         self.screen.fill(color)
-        pygame.draw.rect(self.screen, pygame.Color(255,0,0), (self.model.jack.x, self.model.jack.y, 10, 10))
+        pygame.draw.rect(self.screen, pygame.Color(255,0,0), 
+                         (self.model.jack.x, self.model.jack.y, 10, 10))
         pygame.display.update()
 #####################################################################        
 class Vines: 
     #Abstracting for now --- INSERT VINE CODE HERE
     def __init__(self):
-        self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula' 
-        
+        self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula'
+        self.width = 20                                     ###
+        self.height = 20                                    ###
+        vineback = pygame.Surface(self.width, self.height)  ###
+        pygame.draw.rect(vineback, pygame.Color(0,255,0))   ###
 #####################################################################    
 class Model:
     def __init__(self):
