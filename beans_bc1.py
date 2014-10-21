@@ -15,26 +15,27 @@ width = 560
 
 class View:
     """Initializes and creates game"""
-    def __init__(self):
-        pygame.init()
+    def __init__(self, model):
         self.width = width
         self.height = height
-        self.screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_caption('Jack and the Bean Stalk')
-        background = pygame.Surface(self.screen.get_size())
-        self.background = background.convert()
-        self.view.fill(color)
+#        self.view.fill(color)
+        self.model = model
         #draw model.vines screen.blit(model.vines)
         #This class (View class) will print self.text/the ACTUAL vines
+
+    def viewprint(self):
+        print self.model.vines.text
+        
+class Vines: 
+    #If this doesn't work, put outside of Model class
+    #Abstracting for now --- blank vines
+    def __init__(self):
+        self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula'        
     
 class Model:
     def __init__(self):
         self.vines = Vines()
-    class Vines: 
-        #If this doesn't work, put outside of Model class
-        #Abstracting for now --- blank vines
-        def __init__(self):
-            self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula'
+
             
 class Controller:
     def __init__(self, model):
@@ -45,3 +46,9 @@ class Controller:
         
         
 if __name__ == "__main__":
+    gameModel = Model()
+    gameView = View(gameModel)
+    gameCont = Controller(gameModel)
+    
+    gameCont.getinput()
+    gameView.viewprint()
