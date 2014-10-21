@@ -23,13 +23,18 @@ class View:
         pygame.display.set_caption('Jack and the Bean Stalk')
         background = pygame.Surface(self.screen.get_size())
         self.background = background.convert()
-
+        self.view.fill(color)
+    
 class Model:
+    def __init__(self, view)
+        self.view = view
     class Vines:
-
+        
+        #Abstracting for now --- blank background
+        
 if __name__ == "__main__":
     Clock.tick(60)    
-    MainWindow = MainFrame() 
+    MainWindow = View() 
 #    Jack = char()
     controller = CharControl()
     controller.draw(MainWindow)
