@@ -18,8 +18,11 @@ class View:
     def __init__(self, model):
         self.width = width
         self.height = height
-#        self.view.fill(color)
+        self.screen = pygame.display.set_mode((self.width, self.height))
         self.model = model
+        pygame.display.set_caption('Jack and the Bean Stalk')
+        background = pygame.Surface(self.screen.get_size())
+        self.background = background.convert()
         #draw model.vines screen.blit(model.vines)
         #This class (View class) will print self.text/the ACTUAL vines
 
