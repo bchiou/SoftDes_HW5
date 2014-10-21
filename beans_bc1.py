@@ -24,48 +24,24 @@ class View:
         background = pygame.Surface(self.screen.get_size())
         self.background = background.convert()
         self.view.fill(color)
+        #draw model.vines screen.blit(model.vines)
+        #This class (View class) will print self.text/the ACTUAL vines
     
 class Model:
-    def __init__(self, view)
-        self.view = view
-    class Vines:
+    def __init__(self):
+        self.vines = Vines()
+    class Vines: 
+        #If this doesn't work, put outside of Model class
+        #Abstracting for now --- blank vines
+        def __init__(self):
+            self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula'
+            
+class Controller:
+    def __init__(self, model):
+        self.model = model
+    
+    def getinput(self):
+        self.model.vines.text = raw_input('Fuck this shit\n')
         
-        #Abstracting for now --- blank background
         
 if __name__ == "__main__":
-    Clock.tick(60)    
-    MainWindow = View() 
-#    Jack = char()
-    controller = CharControl()
-    controller.draw(MainWindow)
-    
-    MainWindow.background.fill(color)
-#    maze = Vines()
-#    maze.maze(.75, .20)
-    MainWindow.screen.blit(MainWindow.background,(0,0))
-
-#    maze.update()
-#    maze.draw(MainWindow)
-
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                controller.handle_key_event(event.key)
-
-        pygame.display.flip() 
-        pygame.display.update()
-#        Clock.sleep(.001) 
-        
-#    maze.update()
-#    maze.draw(MainWindow)
-#    pygame.display.flip() 
-#    MainWindow.MainLoop()
-#    pygame.display.update()
-
-#    jack = char(x = 0, y = 0)
-#    jack.move(5,10)
-#    print char.move.x
