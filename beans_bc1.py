@@ -72,7 +72,7 @@ class Controller:
             if event.key == pygame.K_LEFT:
                 if (self.model.jack.x > 0  and ((self.model.jack.x-10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
             if event.key == pygame.K_RIGHT:
-                if (self.model.jack.x < width - 10 and ((self.model.jack,x+10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x += 10
+                if (self.model.jack.x < width - 10 and ((self.model.jack.x+10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x += 10
             
 #####################################################################
 class Jack:
