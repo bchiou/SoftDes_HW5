@@ -29,22 +29,34 @@ class View:
     def viewprint(self):
         #print self.model.vines.text
         self.screen.fill(color)
-        pygame.draw.rect(self.screen, pygame.Color(255,0,0), 
+        pygame.draw.rect(self.screen, pygame.Color(255,0,0), #Jack
                          (self.model.jack.x, self.model.jack.y, 10, 10))
+        for vine in self.model.vines:
+            pygame.draw.rect(self.screen, pygame.Color(0,255,0), #vines
+                         (vine.x, vine.y, vine.height, vine.width))
+        pygame.draw
         pygame.display.update()
 #####################################################################        
 class Vines: 
     #Abstracting for now --- INSERT VINE CODE HERE
-    def __init__(self):
+    def __init__(self,x,y):
         self.text = '""fucking vines"-that can be interpreted two ways"-Pratool Gadtaula'
-        self.width = 20                                     ###
-        self.height = 20                                    ###
-        vineback = pygame.Surface(self.width, self.height)  ###
-        pygame.draw.rect(vineback, pygame.Color(0,255,0))   ###
+        self.width = 10                                     ###
+        self.height = 10                                    ###
+        self.x=x
+        self.y=y
+        #vineback = pygame.Surface(self.width, self.height)  ###
+        #pygame.draw.rect(vineback, pygame.Color(0,255,0))   ###
 #####################################################################    
 class Model:
     def __init__(self):
-        self.vines = Vines()
+        #Keeps track of vine locations 
+        self.vine_locations=[(10,10),(10,20),(10,30),(20,10),(20,20),(20,30),(10,40),(10,50),(10,60),(20,40),(20,50),(20,60)]
+        #Creates empty list called vines        
+        self.vines=[]
+        for location in self.vine_locations:
+            #Creates instance in list of vines object
+           self.vines.append(Vines(location[0],location[1]))
         self.jack = Jack()
 
 #####################################################################                
@@ -58,7 +70,7 @@ class Controller:
             if event.key == pygame.K_DOWN:
                 if (self.model.jack.y < height - 10): self.model.jack.y += 10
             if event.key == pygame.K_LEFT:
-                if (self.model.jack.x > 0): self.model.jack.x -= 10
+                if (self.model.jack.x > 0  and ((self.model.jack.x-10,self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
             if event.key == pygame.K_RIGHT:
                 if (self.model.jack.x < width - 10): self.model.jack.x += 10
             
@@ -69,7 +81,7 @@ class Jack:
         self.y = width - 10
 
 #####################################################################               
-if __name__ == "__main__":gb
+if __name__ == "__main__":
     gameModel = Model()
     gameView = View(gameModel)
     gameCont = Controller(gameModel)
