@@ -66,13 +66,13 @@ class Controller:
     def handle_key_event(self, event):        
         if event.type == KEYUP:
             if event.key == pygame.K_UP:
-                if (self.model.jack.y > 0): self.model.jack.y -= 10
+                if (self.model.jack.y > 0 and ((self.model.jack.x, self.model.jack.y-10) not in (self.model.vine_locations))): self.model.jack.y -= 10
             if event.key == pygame.K_DOWN:
-                if (self.model.jack.y < height - 10): self.model.jack.y += 10
+                if (self.model.jack.y < height - 10 and ((self.model.jack.x, self.model.jack.y+10) not in (self.model.vine_locations))): self.model.jack.y += 10
             if event.key == pygame.K_LEFT:
-                if (self.model.jack.x > 0  and ((self.model.jack.x-10,self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
+                if (self.model.jack.x > 0  and ((self.model.jack.x-10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
             if event.key == pygame.K_RIGHT:
-                if (self.model.jack.x < width - 10): self.model.jack.x += 10
+                if (self.model.jack.x < width - 10 and ((self.model.jack,x+10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x += 10
             
 #####################################################################
 class Jack:
