@@ -25,45 +25,47 @@ class MainFrame:
         background = pygame.Surface(self.screen.get_size())
         self.background = background.convert()
 
-class Vines:
-    """creates vine maze"""
-    def __init__(self):
-        self.state = 'idle'
-
-    def maze(self, complexity, density):
-        H = height
-        W = width        
-        # Only odd shapes
-        shape = ((H // 2) * 2 + 1, (W // 2) * 2 + 1)
-        # Adjust complexity and density relative to maze size
-        complexity = int(complexity * ((shape[0] + shape[1])//2))
-        density    = int(density * (shape[0] // 2 + shape[1] // 2))
-        # Build actual maze
-        Z = numpy.zeros(shape, dtype=int)
-        # Make aisles
-        for i in range(density):
-            x, y = numpy.random.randint(0, shape[1] // 2) * 2, numpy.random.randint(0, shape[0] //2) * 2
-            Z[y, x] = 1
-            for j in range(complexity):
-                neighbours = []
-                if x > 1:             
-                    neighbours.append((y, x - 2))
-                if x < shape[1] - 2:  
-                    neighbours.append((y, x + 2))
-                if y > 1:             
-                    neighbours.append((y - 2, x))
-                if y < shape[0] - 2:  
-                    neighbours.append((y + 2, x))
-                if len(neighbours):
-                    y_,x_ = neighbours[numpy.random.randint(0, len(neighbours) - 1)]
-                    if Z[y_, x_] == 0:
-                        Z[y_, x_] = 1
-                        Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
-                        x, y = x_, y_
-        return Z
-#    def update(self):
-#        if self.state == 'idle':
-#            print 'Idling'
+class Model:
+    
+    class Vines:
+        """creates vine maze"""
+        def __init__(self):
+            self.state = 'idle'
+    
+        def maze(self, complexity, density):
+            H = height
+            W = width        
+            # Only odd shapes
+            shape = ((H // 2) * 2 + 1, (W // 2) * 2 + 1)
+            # Adjust complexity and density relative to maze size
+            complexity = int(complexity * ((shape[0] + shape[1])//2))
+            density    = int(density * (shape[0] // 2 + shape[1] // 2))
+            # Build actual maze
+            Z = numpy.zeros(shape, dtype=int)
+            # Make aisles
+            for i in range(density):
+                x, y = numpy.random.randint(0, shape[1] // 2) * 2, numpy.random.randint(0, shape[0] //2) * 2
+                Z[y, x] = 1
+                for j in range(complexity):
+                    neighbours = []
+                    if x > 1:             
+                        neighbours.append((y, x - 2))
+                    if x < shape[1] - 2:  
+                        neighbours.append((y, x + 2))
+                    if y > 1:             
+                        neighbours.append((y - 2, x))
+                    if y < shape[0] - 2:  
+                        neighbours.append((y + 2, x))
+                    if len(neighbours):
+                        y_,x_ = neighbours[numpy.random.randint(0, len(neighbours) - 1)]
+                        if Z[y_, x_] == 0:
+                            Z[y_, x_] = 1
+                            Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
+                            x, y = x_, y_
+            return Z
+    #    def update(self):
+    #        if self.state == 'idle':
+    #            print 'Idling'
     def draw(self,screen):
         vine = pygame.image.load('vine.jpg').convert() 
        # Z = self.maze(.75, .20)
