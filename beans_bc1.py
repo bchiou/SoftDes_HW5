@@ -63,6 +63,11 @@ class Model:
 class Controller:
     def __init__(self, model):
         self.model = model    
+    def pressbutton(self):
+        startbutton = pygame.image.load('start.jpeg').convert()
+        youwin = pygame.image.load('youwin.jpeg').convert()
+        
+        
     def handle_key_event(self, event):        
         if event.type == KEYUP:
             if event.key == pygame.K_UP:
@@ -86,6 +91,7 @@ if __name__ == "__main__":
     gameView = View(gameModel)
     gameCont = Controller(gameModel)
     running=True
+    
     
     while running:
         for event in pygame.event.get():

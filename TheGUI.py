@@ -59,7 +59,7 @@ class MakeMaze:
         (min steprange, max steprange)"""
     
         self.directions = [self.turn_R, self.turn_L, self.turn_L, self.go_up]
-        currentpos = (start, self.height-4)
+        currentpos = (start, self.height-20)
         list_of_points = [currentpos]
     
         if currentpos[1] == 0 and currentpos[0] == 0:
@@ -73,7 +73,7 @@ class MakeMaze:
             if currentpos[0] < 0:
                 currentpos = (0, currentpos[1])
             if currentpos[0] > self.width:
-                currentpos = (self.width-4, currentpos[1])
+                currentpos = (self.width-20, currentpos[1])
             if currentpos[1] < 0:
                 currentpos = (currentpos[0], 0)
             #Add the point to the list of points the vine goes through
@@ -84,7 +84,7 @@ class MakeMaze:
         """Creates random additional deadend vines that are not solutions"""
         rn_W = random.randint(int(self.width*.1), 560) #start 10% up from bottom of screen
         rn_H = random.randint(0, 560)
-        return self.build_maze(rn_W, rn_H, (8, 28))
+        return self.build_maze(rn_W, rn_H, (20, 32))
 
 
 class Vines:
@@ -97,19 +97,19 @@ class Vines:
     def increasepix(self, obj):
         """Increase thickness of the vine"""
         if obj < 0:
-            newobj = obj-4
+            newobj = obj-20
             return int(newobj)
         if obj >= 0:
-            newobj = obj+4
+            newobj = obj+20
             return int(newobj)
 
     def drawSolu(self):
         """Draw the correct solution path outputted above from 'build_maze'"""                    
         vinemaze = MakeMaze()
-        solulist = vinemaze.build_maze(self.width-4, 0, (8,24))
+        solulist = vinemaze.build_maze(self.width-20, 0, (20,32))
         
         #draw starting point square at bottom right corner
-        start = pygame.Rect(self.width, self.height, -4, -4)
+        start = pygame.Rect(self.width, self.height, -20, -20)
         pygame.draw.rect(MainWindow.background, self.color, start)
         dimenlist = []
         
@@ -123,7 +123,7 @@ class Vines:
             #keep track of coordinates where non-overlapping vines occur            
             if RectH > 0:
                 dimenlist.append(prev_coord)
-            
+
             #Increase thickness of vines, depending on if they lie vertical or horizontal            
             if abs(RectW) < abs(RectH):
                 newRectW = self.increasepix(RectW)
@@ -139,7 +139,7 @@ class Vines:
             prevH = dimenlist[i][1]
             if prevW > 0:
                 fillcoord = (prevW, prevH)
-                fill = pygame.Rect(fillcoord[0], fillcoord[1], 4, 4)
+                fill = pygame.Rect(fillcoord[0], fillcoord[1], 20, 20)
                 pygame.draw.rect(MainWindow.background, self.color, fill)
 
         MainWindow.screen.blit(MainWindow.background,(0,0))
@@ -148,14 +148,22 @@ class Vines:
     def drawDead(self):
         """Draw vines to the list of deadend nodes assigned under 'dead_ends'"""
         vinemaze = MakeMaze()
-        for x in xrange(10):  
+        
+        #draw 5 deadend vines
+        for x in xrange(5):  
             mazelist = vinemaze.dead_ends()
+            dimenlist = []
             #determine the rectangle's starting coordinate, width, and height
             for j in range(1, len(mazelist)):
                 coord = mazelist[j]
                 precoord = mazelist[j-1]
                 RectW2 = precoord[0] - coord[0]
                 RectH2 = precoord[1] - coord[1]
+                
+                #keep track of coordinates where non-overlapping vines occur            
+                if RectH2 > 0:
+                    dimenlist.append(precoord)                
+                
                 
                  #Increase thickness of vines, depending on if they lie vertical or horizontal 
                 if abs(RectW2) < abs(RectH2):
@@ -166,6 +174,15 @@ class Vines:
                     newRectH2 = self.increasepix(RectH2)
                     vine2 = pygame.Rect(coord[0], coord[1], RectW2, newRectH2)
                     pygame.draw.rect(MainWindow.background, self.color, vine2)
+                
+            #fill in the missing corners due to non-overlapping vines
+            for n in range(1, len(dimenlist)):
+                prevW = dimenlist[n][0]
+                prevH = dimenlist[n][1]
+                if prevW > 0:
+                    fillcoord = (prevW, prevH)
+                    fill = pygame.Rect(fillcoord[0], fillcoord[1], 20, 20)
+                    pygame.draw.rect(MainWindow.background, self.color, fill)
             
             MainWindow.screen.blit(MainWindow.background,(0,0))  
                 
@@ -178,9 +195,7 @@ def main():
     directions = [MakeMaze.turn_R, MakeMaze.turn_L, MakeMaze.go_up] 
     maze = Vines()
     maze.drawSolu()
-    maze.drawDead()
-    
-
+    maze.drawDead()  
 
 
 if __name__ == "__main__":
@@ -197,3 +212,8 @@ if __name__ == "__main__":
     pygame.display.flip() 
     MainWindow.MainLoop()
     pygame.display.update()
+
+
+
+
+
