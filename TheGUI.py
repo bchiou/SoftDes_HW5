@@ -55,7 +55,7 @@ class MakeMaze:
         currentpos = (start, self.height-4)
         list_of_points = [currentpos]
     
-        if currentpos[1] == 0 & currentpos[0] == 0:
+        if currentpos[1] == 0 and currentpos[0] == 0:
             return list_of_points
         while currentpos[1] > end or currentpos[0] > end:
             f = random.choice(self.directions)
@@ -100,22 +100,33 @@ class Vines:
         #draw starting point square
         start = pygame.Rect(self.width, self.height, -4, -4)
         pygame.draw.rect(MainWindow.background, self.color, start)
-
+        dimenlist = []
         
         for i in range(1, len(solulist)):
-#        for i in range(1, 10):
+#        for i in range(1, 20):
             cur_coord = solulist[i]
             prev_coord = solulist[i-1]
-            RectW= prev_coord[0] - cur_coord[0]
+            RectW = prev_coord[0] - cur_coord[0]
             RectH = prev_coord[1] - cur_coord[1]
+            if RectH > 0:
+                dimenlist.append(prev_coord)
             if abs(RectW) < abs(RectH):
                 newRectW = self.increasepix(RectW)
-                vine = pygame.Rect(cur_coord[0], cur_coord[1], newRectW, RectH)
-                pygame.draw.rect(MainWindow.background, self.color, vine)
+                vine = pygame.Rect(cur_coord[0], cur_coord[1], newRectW, RectH)              
             else:
                 newRectH = self.increasepix(RectH)
                 vine = pygame.Rect(cur_coord[0], cur_coord[1], RectW, newRectH)
-                pygame.draw.rect(MainWindow.background, self.color, vine)
+            pygame.draw.rect(MainWindow.background, self.color, vine)
+        
+        #fill in missing corners due to non overlapping rectangles
+        for i in range(1, len(dimenlist)):
+            prevW = dimenlist[i][0]
+            prevH = dimenlist[i][1]
+            if prevW > 0:
+                fillcoord = (prevW, prevH)
+                fill = pygame.Rect(fillcoord[0], fillcoord[1], 4, 4)
+                pygame.draw.rect(MainWindow.background, self.color, fill)
+
         MainWindow.screen.blit(MainWindow.background,(0,0))
         pygame.display.update()
         
@@ -150,7 +161,7 @@ def main():
 #    MainWindow.screen.blit(MainWindow.background,(0,0))        
 #    maze.update()
     maze.drawSolu()
-#    maze.drawDead()
+    maze.drawDead()
     
 
 
