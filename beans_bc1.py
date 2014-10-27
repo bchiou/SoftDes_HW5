@@ -56,7 +56,7 @@ class Model:
         self.vines=[]
         for location in self.vine_locations:
             #Creates instance in list of vines object
-           self.vines.append(Vines(location[0],location[1]))
+            self.vines.append(Vines(location[0],location[1]))
         self.jack = Jack()
 
 #####################################################################                
