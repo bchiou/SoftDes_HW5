@@ -7,20 +7,21 @@ import numpy
 import pygame, sys, random, time
 from pygame.locals import *
 Clock = pygame.time.Clock()
-color = pygame.Color(0,160,255)
+color = 0,160,255
 height = 560
 width = 560
 
 #screen = pygame.display.set_mode((560,560))
 
 class View:
+    global color
     """Initializes and creates game"""
     def __init__(self, model):
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.model = model
-        pygame.display.set_caption('Jack and the Bean Stalk')
+        pygame.display.set_caption("DON'T F****** FALL IN")
         background = pygame.Surface(self.screen.get_size())
         self.background = background.convert()
         #draw model.vines screen.blit(model.vines)
@@ -29,31 +30,41 @@ class View:
     def viewprint(self):
         #print self.model.vines.text
         self.screen.fill(color)
+        self.drawSolu()
         pygame.draw.rect(self.screen, pygame.Color(255,0,0), #Jack
                          (self.model.jack.x, self.model.jack.y, 10, 10))
         for vine in self.model.vines:
             pygame.draw.rect(self.screen, pygame.Color(0,255,0), #vines
                          (vine.x, vine.y, vine.height, vine.width))
+        #view.drawDead()
+
+        try:
+            if (self.screen.get_at((self.model.jack.x-1,self.model.jack.y-1))[1] and self.screen.get_at((self.model.jack.x+10,self.model.jack.y-1))[1] and self.screen.get_at((self.model.jack.x-1,self.model.jack.y+10))[1] and self.screen.get_at((self.model.jack.x+10,self.model.jack.y+10))[1])==0:
+                print "YOU F****** FELL IN"
+                global running
+                running=False
+        except: pass
+    
         pygame.draw
         pygame.display.update()
     
     def increasepix(self, obj):
         """Increase thickness of the vine"""
         if obj < 0:
-            newobj = obj-20
+            newobj = obj-25
             return int(newobj)
         if obj >= 0:
-            newobj = obj+20
+            newobj = obj+25
             return int(newobj)
         
     def drawSolu(self):
         """Draw the correct solution path outputted above from 'build_maze'"""                    
-        vinemaze = MakeMaze()
-        solulist = vinemaze.build_maze(self.width-20, 0, (20,32))   
+        vinemaze = self.model.vinemaze
+        solulist = self.model.solulist
         
         #draw starting point square at bottom right corner
         start = pygame.Rect(self.width, self.height, -20, -20)
-        pygame.draw.rect(MainWindow.background, self.color, start)
+        pygame.draw.rect(self.background, color, start)
         dimenlist = []
         
         #determine the rectangle's starting coordinate, width, and height
@@ -74,7 +85,7 @@ class View:
             else:
                 newRectH = self.increasepix(RectH)
                 vine = pygame.Rect(cur_coord[0], cur_coord[1], RectW, newRectH)
-            pygame.draw.rect(MainWindow.background, self.color, vine)
+            pygame.draw.rect(self.background, color, vine)
         
         #fill in the missing corners due to non-overlapping vines
         for i in range(1, len(dimenlist)):
@@ -83,25 +94,21 @@ class View:
             if prevW > 0:
                 fillcoord = (prevW, prevH)
                 fill = pygame.Rect(fillcoord[0], fillcoord[1], 20, 20)
-                pygame.draw.rect(MainWindow.background, self.color, fill)
+                pygame.draw.rect(self.background, color, fill)
 
-        MainWindow.screen.blit(MainWindow.background,(0,0))
+        self.screen.blit(self.background,(0,0))
         pygame.display.update()
+        
 #####################################################################    
 class Model:
     def __init__(self):
         global width
         global height
-        #Keeps track of vine locations 
-        self.vine_locations = 
-        #Creates empty list called vines        
-        self.vines=[]
-        for location in self.vine_locations:
-            #Creates instance in list of vines object
-            self.vines.append(Vines(location[0],location[1]))
-        self.jack = Jack()
         self.vinemaze = MakeMaze()
         self.solulist = self.vinemaze.build_maze(width-20, 0, (20,32))
+        self.vine_locations = self.solulist
+        self.vines = []
+        self.jack = Jack()
 #####################################################################
 class MakeMaze:
     """calculates a maze path using the node points at which
@@ -163,15 +170,35 @@ class Controller:
         
     def handle_key_event(self, event):        
         if event.type == KEYUP:
+#            if event.key == pygame.K_UP:
+#                if (self.model.jack.y > 0 and ((self.model.jack.x, self.model.jack.y-10) not in (self.model.vine_locations))): self.model.jack.y -= 10
+#            if event.key == pygame.K_DOWN:
+#                if (self.model.jack.y < height - 10 and ((self.model.jack.x, self.model.jack.y+10) not in (self.model.vine_locations))): self.model.jack.y += 10
+#            if event.key == pygame.K_LEFT:
+#                if (self.model.jack.x > 0  and ((self.model.jack.x-10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
+#            if event.key == pygame.K_RIGHT:
+#                if (self.model.jack.x < width - 10 and ((self.model.jack.x+10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x += 10
             if event.key == pygame.K_UP:
-                if (self.model.jack.y > 0 and ((self.model.jack.x, self.model.jack.y-10) not in (self.model.vine_locations))): self.model.jack.y -= 10
+                if (self.model.jack.y > 0): self.model.jack.y -= 10
             if event.key == pygame.K_DOWN:
-                if (self.model.jack.y < height - 10 and ((self.model.jack.x, self.model.jack.y+10) not in (self.model.vine_locations))): self.model.jack.y += 10
+                if (self.model.jack.y < height - 10): self.model.jack.y += 10
             if event.key == pygame.K_LEFT:
-                if (self.model.jack.x > 0  and ((self.model.jack.x-10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x -= 10
+                if (self.model.jack.x > 0): self.model.jack.x -= 10
             if event.key == pygame.K_RIGHT:
-                if (self.model.jack.x < width - 10 and ((self.model.jack.x+10, self.model.jack.y) not in (self.model.vine_locations))): self.model.jack.x += 10
-            
+                if (self.model.jack.x < width - 10): self.model.jack.x += 10
+            fail=True
+            for point in self.model.vine_locations:
+                if (self.model.jack.x-20)<point[0]<(self.model.jack.x+20):
+                    if (self.model.jack.y-20)<point[1]<(self.model.jack.y+20):
+                        fail=False
+                        break
+            #if fail==True: print "Fail!"
+#            inx = self.model.jack.x
+#            iny = self.model.jack.y
+#            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+#                for i in len(range(self.model.solulist - 1)):
+#                    if(inx > L)
+                
 #####################################################################
 class Jack:
     def __init__(self):
@@ -197,5 +224,5 @@ if __name__ == "__main__":
             else:
                 gameCont.handle_key_event(event)
         gameView.viewprint()
-        time.sleep(0.001)
+        time.sleep(0.0001)
     pygame.quit()
