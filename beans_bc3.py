@@ -37,11 +37,11 @@ class View:
             pygame.draw.rect(self.screen, pygame.Color(0,255,0), #vines
                          (vine.x, vine.y, vine.height, vine.width))
         #view.drawDead()
+        global running
 
         try:
             if (self.screen.get_at((self.model.jack.x-1,self.model.jack.y-1))[1] and self.screen.get_at((self.model.jack.x+10,self.model.jack.y-1))[1] and self.screen.get_at((self.model.jack.x-1,self.model.jack.y+10))[1] and self.screen.get_at((self.model.jack.x+10,self.model.jack.y+10))[1])==0:
                 print "YOU F****** FELL IN"
-                global running
                 running=False
             if self.model.jack.x == 0 and self.model.jack.y == 0:
                 print "YOU F****** WIN"                
