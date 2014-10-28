@@ -43,6 +43,9 @@ class View:
                 print "YOU F****** FELL IN"
                 global running
                 running=False
+            if self.model.jack.x == 0 and self.model.jack.y == 0:
+                print "YOU F****** WIN"                
+                running=False
         except: pass
     
         pygame.draw
